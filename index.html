@@ -1820,11 +1820,9 @@
         const TELEGRAM_CHAT_ID = '752397785';
         // =====================================================
 
-        // Preloader
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('preloader').classList.add('hidden');
-            }, 500);
+        // Preloader — убираем сразу
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('preloader').classList.add('hidden');
         });
 
         // Header scroll
@@ -1873,30 +1871,40 @@
             const date = now.toLocaleDateString('ru-RU');
             const time = now.toLocaleTimeString('ru-RU');
             
-            let message = '🔔 НОВАЯ ЗАЯВКА с сайта Super Jump!\n\n';
-            message += '👤 Имя: ' + data.name + '\n';
-            message += '📱 Телефон: ' + data.phone + '\n';
-            message += '📧 Email: ' + (data.email || 'Не указан') + '\n';
-            message += '🏙️ Город: ' + (data.city || 'Не указан') + '\n';
-            message += '🕐 Удобное время: ' + (data.time || 'Не выбрано') + '\n';
-            message += '💬 Сообщение: ' + (data.message || 'Нет сообщения') + '\n\n';
-            message += '📅 Дата: ' + date + ', ' + time;
+            let message = '\uD83D\uDD14 НОВАЯ ЗАЯВКА с сайта Super Jump!\n\n';
+            message += '\uD83D\uDC64 Имя: ' + data.name + '\n';
+            message += '\uD83D\uDCF1 Телефон: ' + data.phone + '\n';
+            message += '\uD83D\uDCE7 Email: ' + (data.email || 'Не указан') + '\n';
+            message += '\uD83C\uDFD9 Город: ' + (data.city || 'Не указан') + '\n';
+            message += '\uD83D\uDD50 Удобное время: ' + (data.time || 'Не выбрано') + '\n';
+            message += '\uD83D\uDCAC Сообщение: ' + (data.message || 'Нет сообщения') + '\n\n';
+            message += '\uD83D\uDCC5 Дата: ' + date + ', ' + time;
 
             const url = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
             
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    chat_id: TELEGRAM_CHAT_ID,
-                    text: message,
-                    parse_mode: 'HTML'
-                })
-            });
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message
+                    })
+                });
 
-            return response.ok;
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error('Telegram API error:', errorData);
+                    return false;
+                }
+
+                return true;
+            } catch (err) {
+                console.error('Fetch error:', err);
+                return false;
+            }
         }
 
         // Form submit
@@ -1917,7 +1925,7 @@
             };
 
             // Проверяем заполнены ли обязательные поля
-            if (!data.name || data.phone.length < 17) {
+            if (!data.name || data.phone.length < 6) {
                 showToast('Заполните имя и телефон', 'error');
                 return;
             }
