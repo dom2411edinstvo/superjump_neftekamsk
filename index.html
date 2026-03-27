@@ -224,7 +224,8 @@
         .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
         .hero-gift-note {
             margin-top: 20px; font-size: 14px; color: var(--green); font-weight: 600;
-            display: flex; align-items: center; gap: 8px;
+            display: flex; align-items: flex-start; gap: 6px;
+            flex-wrap: wrap; word-break: break-word; line-height: 1.4;
         }
 
         .btn {
@@ -964,7 +965,7 @@
             }
             .hero-desc { max-width: 100%; font-size: 15px; }
             .hero-buttons { flex-wrap: wrap; }
-            .hero-photo { width: 240px; height: 310px; }
+            .hero-photo { width: 280px; height: 360px; }
 
             .what-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
             .appeal-layout { grid-template-columns: 1fr; }
@@ -996,7 +997,7 @@
            RESPONSIVE — MOBILE (≤768px)
            ============================================ */
         @media (max-width: 768px) {
-            .container { padding: 0 16px; }
+            .container { padding: 0 14px; }
             nav, .header-btn { display: none; }
             .menu-btn { display: flex; }
             section { padding: 50px 0; }
@@ -1004,45 +1005,44 @@
             .section-title { font-size: clamp(20px, 5.5vw, 30px); }
             .section-desc { font-size: 14px; padding: 0 5px; }
 
-            /* Hero mobile: фото сверху, текст по центру снизу */
+            /* Hero mobile: 2 колонки — текст слева, фото справа */
             .hero {
-                padding-top: 72px;
-                padding-bottom: 30px;
+                padding-top: 68px;
+                padding-bottom: 18px;
                 min-height: unset;
             }
             .hero-content {
-                grid-template-columns: 1fr;
-                gap: 16px;
-                justify-items: center;
+                grid-template-columns: 1fr auto;
+                gap: 12px;
+                align-items: center;
+                justify-items: start;
             }
-            /* Фото — первым (сверху) */
-            .hero-image {
+            /* Текст — слева */
+            .hero-text {
                 order: 1;
+                text-align: left;
+                align-items: flex-start;
                 width: 100%;
+            }
+            /* Фото — справа */
+            .hero-image {
+                order: 2;
                 display: flex;
                 justify-content: center;
-            }
-            /* Текст — вторым (снизу), по центру */
-            .hero-text {
-                order: 2;
-                text-align: center;
                 align-items: center;
-                width: 100%;
             }
-            .hero-desc { max-width: 100%; font-size: 13px; margin-bottom: 14px; }
-            .hero-buttons { justify-content: center; flex-wrap: wrap; gap: 10px; }
-            .hero-gift-note { justify-content: center; text-align: center; font-size: 12px; margin-top: 10px; }
-            .hero h1 { font-size: clamp(18px, 5.5vw, 26px); white-space: normal; line-height: 1.2; margin-bottom: 14px; }
-            .hero-badge { font-size: 9px; letter-spacing: 1px; padding: 5px 12px; margin-bottom: 12px; }
+            .hero-desc { max-width: 100%; font-size: 12px; margin-bottom: 10px; line-height: 1.5; }
+            .hero-buttons { justify-content: flex-start; flex-wrap: wrap; gap: 8px; }
+            .hero-gift-note { justify-content: flex-start; text-align: left; font-size: 11px; margin-top: 8px; line-height: 1.4; }
+            .hero h1 { font-size: clamp(16px, 4.8vw, 22px); white-space: normal; line-height: 1.2; margin-bottom: 10px; }
+            .hero-badge { font-size: 8.5px; letter-spacing: 0.8px; padding: 5px 10px; margin-bottom: 10px; }
 
             /* Фото размер на мобильном */
-            .hero-photo { width: 170px; height: 220px; border-radius: 20px; }
-            .hero-photo img { border-radius: 18px; }
-
-
+            .hero-photo { width: 130px; height: 170px; border-radius: 18px; }
+            .hero-photo img { border-radius: 16px; }
 
             /* Кнопки */
-            .btn { padding: 11px 20px; font-size: 11px; letter-spacing: 0.3px; }
+            .btn { padding: 10px 16px; font-size: 10.5px; letter-spacing: 0.2px; }
 
             /* Appeal */
             .appeal-label { display: none; }
@@ -1137,10 +1137,18 @@
         }
 
         @media (max-width: 480px) {
-            .container { padding: 0 14px; }
+            .container { padding: 0 12px; }
             section { padding: 40px 0; }
-            .hero { padding-top: 68px; padding-bottom: 28px; }
-            .hero-photo { width: 150px; height: 195px; }
+            .hero { padding-top: 64px; padding-bottom: 16px; }
+            .hero-content { gap: 10px; }
+            .hero-photo { width: 115px; height: 150px; border-radius: 16px; }
+            .hero-photo img { border-radius: 14px; }
+            .hero h1 { font-size: clamp(15px, 4.5vw, 20px); }
+            .hero-desc { font-size: 11px; margin-bottom: 8px; }
+            .hero-badge { font-size: 8px; padding: 4px 9px; margin-bottom: 8px; }
+            .hero-buttons { gap: 7px; }
+            .btn { padding: 9px 14px; font-size: 10px; }
+            .hero-gift-note { font-size: 10px; margin-top: 7px; }
             .results-grid { grid-template-columns: 1fr; }
             .about-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
             .about-stat { padding: 14px 5px; }
@@ -1148,7 +1156,6 @@
             .cert-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
             .cert-title { font-size: 10px; padding: 6px 5px; }
             .who-grid { grid-template-columns: 1fr; }
-            .hero h1 { font-size: clamp(20px, 6.5vw, 28px); }
         }
     </style>
 </head>
